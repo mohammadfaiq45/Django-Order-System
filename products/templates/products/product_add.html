@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product</title>
+</head>
+
+<body>
+    <h1>Add Product</h1>
+    <form method="POST">
+        {% csrf_token %}
+        Name: <input type="text" name="name"><br>
+        Description: <textarea name="description"></textarea><br>
+        Visibility: <input type="checkbox" name="visibility"><br>
+        Available Units: <input type="number" name="available_units"><br>
+        <input type="submit" value="Add">
+    </form>
+    <a href="{% url 'product_list' %}">Back to list</a>
+</body>
+
+</html>

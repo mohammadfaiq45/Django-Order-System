@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Reject</title>
+</head>
+
+<body>
+    <h1>Reject Order</h1>
+    <form method="POST">
+        {% csrf_token %}
+        Rejection Reason: <br>
+        <textarea name="rejection_reason" required></textarea><br>
+        <input type="submit" value="Reject Order">
+    </form>
+    <a href="{% url 'order_list' %}">Back to list</a>
+
+</body>
+
+</html>

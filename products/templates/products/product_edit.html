@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Product</title>
+</head>
+
+<body>
+    <h1>Edit Product</h1>
+    <form method="POST">
+        {% csrf_token %}
+        Name: <input type="text" name="name" value="{{ product.name }}"><br>
+        Description:
+        <textarea name="description" rows="4" cols="50">{{ product.description }}</textarea><br>
+        Visibility: <input type="checkbox" name="visibility" {% if product.visibility %}checked{% endif %}><br>
+        Available Units: <input type="number" name="available_units" value="{{ product.available_units }}"><br>
+        <input type="submit" value="Save">
+    </form>
+    <a href="{% url 'product_list' %}">Back to list</a>
+</body>
+
+</html>
