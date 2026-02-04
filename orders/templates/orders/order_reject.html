@@ -63,12 +63,17 @@
 
     <form method="POST">
         {% csrf_token %}
-        <label>Rejection Reason:</label><br>
-        <textarea name="rejection_reason" required></textarea><br>
+
+        <label for="rejection_reason">Rejection Reason:</label><br>
+        <textarea id="rejection_reason" name="rejection_reason" required minlength="5"
+            placeholder="Provide reason for rejection (at least 5 characters)"></textarea><br><br>
+
         <input type="submit" value="Reject Order">
     </form>
 
+    <br>
     <a href="{% url 'order_list' %}">Back to list</a>
 </body>
+
 
 </html>

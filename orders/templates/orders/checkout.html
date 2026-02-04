@@ -95,7 +95,7 @@
 
     {% if cart_items %}
     <h3>Order Summary</h3>
-    <table>
+    <table border="1">
         <tr>
             <th>Product</th>
             <th>Quantity</th>
@@ -110,21 +110,24 @@
 
     <form method="post">
         {% csrf_token %}
+
         <label for="user">User:</label>
-        <select id="user" name="user">
+        <select id="user" name="user" required>
+            <option value="">--Select User--</option>
             {% for user in users %}
             <option value="{{ user.id }}">{{ user.name }}</option>
             {% endfor %}
         </select>
 
         <label for="address">Address:</label>
-        <textarea id="address" name="address"></textarea>
+        <textarea id="address" name="address" required minlength="10" placeholder="Enter your full address"></textarea>
 
         <label for="phone_no">Phone No:</label>
-        <input type="text" id="phone_no" name="phone_no">
+        <input type="tel" id="phone_no" name="phone_no" pattern="[0-9]{10,15}"
+            title="Enter a valid phone number (10-15 digits)" required placeholder="e.g. 0S3001234567">
 
         <label for="special_instructions">Special Instructions:</label>
-        <textarea id="special_instructions" name="special_instructions"></textarea>
+        <textarea id="special_instructions" name="special_instructions" placeholder="Optional"></textarea>
 
         <br>
         <button type="submit">Place Order</button>
@@ -136,5 +139,6 @@
     {% endif %}
 
 </body>
+
 
 </html>
