@@ -5,18 +5,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order Reject</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            margin-top: 15px;
+        }
+
+        textarea {
+            width: 300px;
+            height: 100px;
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            resize: vertical;
+        }
+
+        input[type="submit"] {
+            margin-top: 10px;
+            padding: 6px 12px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #b52a37;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 6px 12px;
+            background-color: #6c757d;
+            color: white;
+            text-decoration: none;
+            border-radius: 3px;
+        }
+
+        a:hover {
+            background-color: #5a6268;
+        }
+    </style>
 </head>
 
 <body>
     <h1>Reject Order</h1>
+
     <form method="POST">
         {% csrf_token %}
-        Rejection Reason: <br>
+        <label>Rejection Reason:</label><br>
         <textarea name="rejection_reason" required></textarea><br>
         <input type="submit" value="Reject Order">
     </form>
-    <a href="{% url 'order_list' %}">Back to list</a>
 
+    <a href="{% url 'order_list' %}">Back to list</a>
 </body>
 
 </html>

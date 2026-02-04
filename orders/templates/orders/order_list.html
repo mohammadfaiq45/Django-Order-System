@@ -5,27 +5,86 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        a {
+            padding: 4px 8px;
+            text-decoration: none;
+            color: white;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+
+        a[href*="accept"] {
+            background-color: #28a745;
+        }
+
+        a[href*="reject"] {
+            background-color: #dc3545;
+        }
+
+        a:hover {
+            opacity: 0.9;
+        }
+    </style>
 </head>
 
 <body>
     <h1>Order List</h1>
-    <table border="1">
+
+    <table>
         <tr>
             <th>User</th>
-            <th>Product</th>
+            <th>Products</th>
             <th>Status</th>
             <th>Rejection Reason</th>
             <th>Actions</th>
         </tr>
+
         {% for order in orders %}
         <tr>
             <td>{{ order.user.name }}</td>
-            <td>{{ order.product.name }}</td>
+            <td>
+                {% for item in order.items.all %}
+                {{ item.product.name }} ({{ item.quantity }})<br>
+                {% endfor %}
+            </td>
             <td>{{ order.status }}</td>
             <td>{{ order.rejection_reason }}</td>
             <td>
                 {% if order.status == 'pending' %}
-                <a href="{% url 'order_accept' order.id %}">Accept</a> |
+                <a href="{% url 'order_accept' order.id %}">Accept</a>
                 <a href="{% url 'order_reject' order.id %}">Reject</a>
                 {% else %}
                 -
@@ -34,7 +93,6 @@
         </tr>
         {% endfor %}
     </table>
-
 </body>
 
 </html>

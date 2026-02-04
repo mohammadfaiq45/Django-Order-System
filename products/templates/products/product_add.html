@@ -5,19 +5,91 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Product</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            margin-top: 15px;
+        }
+
+        label {
+            display: block;
+            margin: 8px 0 4px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea {
+            width: 300px;
+            padding: 6px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        textarea {
+            height: 80px;
+            resize: vertical;
+        }
+
+        input[type="submit"] {
+            padding: 6px 12px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 6px 12px;
+            background-color: #6c757d;
+            color: white;
+            text-decoration: none;
+            border-radius: 3px;
+        }
+
+        a:hover {
+            background-color: #5a6268;
+        }
+    </style>
 </head>
 
 <body>
     <h1>Add Product</h1>
     <form method="POST">
         {% csrf_token %}
-        Name: <input type="text" name="name"><br>
-        Description: <textarea name="description"></textarea><br>
-        Visibility: <input type="checkbox" name="visibility"><br>
-        Available Units: <input type="number" name="available_units"><br>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name">
+
+        <label for="description">Description:</label>
+        <textarea id="description" name="description"></textarea>
+
+        <label>
+            <input type="checkbox" name="visibility"> Visibility
+        </label>
+
+        <label for="available_units">Available Units:</label>
+        <input type="number" id="available_units" name="available_units">
+
+        <br>
         <input type="submit" value="Add">
     </form>
-    <a href="{% url 'product_list' %}">Back to list</a>
+
+    <a href="{% url 'admin_product_list' %}">Back to list</a>
 </body>
 
 </html>
