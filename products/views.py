@@ -2,14 +2,16 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.views.generic import ListView
 from .models import Product
+from django.utils.decorators import method_decorator
+from users.decorators import admin_required, customer_required
 
-
+@method_decorator(admin_required, name='dispatch')
 class AdminProductListView(ListView):
     model = Product
     template_name = 'products/admin_product_list.html'
     context_object_name = 'products'
 
-
+# @method_decorator(customer_required, name='dispatch')
 class CustomerProductListView(ListView):
     model = Product
     template_name = 'products/customer_product_list.html'
@@ -22,6 +24,7 @@ class CustomerProductListView(ListView):
         )
 
 
+@method_decorator(admin_required, name='dispatch')
 class ProductCreateView(View):
     def get(self, request):
         return render(request, 'products/product_add.html')
@@ -35,7 +38,7 @@ class ProductCreateView(View):
         )
         return redirect('admin_product_list')
 
-
+@method_decorator(admin_required, name='dispatch')
 class ProductUpdateView(View):
     def get(self, request, id):
         product = get_object_or_404(Product, id=id)
@@ -50,7 +53,7 @@ class ProductUpdateView(View):
         product.save()
         return redirect('admin_product_list')
 
-
+@method_decorator(admin_required, name='dispatch')
 class ProductDeleteView(View):
     def get(self, request, id):
         product = get_object_or_404(Product, id=id)

@@ -1,17 +1,20 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.views.generic import ListView
+from django.utils.decorators import method_decorator
+from users.decorators import admin_required, customer_required
 from users.models import User
 from products.models import Product
 from .models import Order, OrderItem
 
 
+@method_decorator(admin_required, name='dispatch')
 class OrderListView(ListView):
     model = Order
     template_name = 'orders/order_list.html'
     context_object_name = 'orders'
 
-
+@method_decorator(admin_required, name='dispatch')
 class OrderAcceptView(View):
     def get(self, request, id):
         order = get_object_or_404(Order, id=id)
@@ -36,7 +39,7 @@ class OrderAcceptView(View):
 
         return redirect('order_list')
 
-
+@method_decorator(admin_required, name='dispatch')
 class OrderRejectView(View):
     def get(self, request, id):
         order = get_object_or_404(Order, id=id)
@@ -49,12 +52,12 @@ class OrderRejectView(View):
         order.save()
         return redirect('order_list')
 
-
+@method_decorator(customer_required, name='dispatch')
 class OrderSuccessView(View):
     def get(self, request):
         return render(request, 'orders/order_success.html')
 
-
+@method_decorator(customer_required, name='dispatch')
 class AddToCartView(View):
     def post(self, request, product_id):
         product = get_object_or_404(Product, id=product_id)
@@ -66,7 +69,7 @@ class AddToCartView(View):
 
         return redirect('customer_product_list')
 
-
+@method_decorator(customer_required, name='dispatch')
 class ViewCartView(View):
     def get(self, request):
         cart = request.session.get('cart', {})
@@ -78,7 +81,7 @@ class ViewCartView(View):
 
         return render(request, 'orders/cart.html', {'cart_items': cart_items})
 
-
+@method_decorator(customer_required, name='dispatch')
 class CheckoutView(View):
     def get(self, request):
         users = User.objects.filter(is_admin=False)
