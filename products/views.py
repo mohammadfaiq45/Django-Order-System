@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
+from django.utils.decorators import method_decorator
 from django.views.generic import ListView
 from .models import Product
-from django.utils.decorators import method_decorator
 from users.decorators import admin_required, customer_required
+
 
 @method_decorator(admin_required, name='dispatch')
 class AdminProductListView(ListView):
@@ -11,7 +12,7 @@ class AdminProductListView(ListView):
     template_name = 'products/admin_product_list.html'
     context_object_name = 'products'
 
-# @method_decorator(customer_required, name='dispatch')
+@method_decorator(customer_required, name='dispatch')
 class CustomerProductListView(ListView):
     model = Product
     template_name = 'products/customer_product_list.html'
