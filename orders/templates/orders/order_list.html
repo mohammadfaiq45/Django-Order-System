@@ -61,38 +61,40 @@
 </head>
 
 <body>
-    <h1>Order List</h1>
 
-    <table>
-        <tr>
-            <th>User</th>
-            <th>Products</th>
-            <th>Status</th>
-            <th>Rejection Reason</th>
-            <th>Actions</th>
-        </tr>
+    <body>
+        <h1>Order List</h1>
 
-        {% for order in orders %}
-        <tr>
-            <td>{{ order.user.name }}</td>
-            <td>
-                {% for item in order.items.all %}
-                {{ item.product.name }} ({{ item.quantity }})<br>
-                {% endfor %}
-            </td>
-            <td>{{ order.status }}</td>
-            <td>{{ order.rejection_reason }}</td>
-            <td>
-                {% if order.status == 'pending' %}
-                <a href="{% url 'order_accept' order.id %}">Accept</a>
-                <a href="{% url 'order_reject' order.id %}">Reject</a>
-                {% else %}
-                -
-                {% endif %}
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-</body>
+        <table border="1" cellpadding="5" cellspacing="0">
+            <tr>
+                <th>User</th>
+                <th>Products</th>
+                <th>Status</th>
+                <th>Rejection Reason</th>
+                <th>Actions</th>
+            </tr>
+
+            {% for order in orders %}
+            <tr>
+                <td>{{ order.user.name }}</td>
+                <td>
+                    {% for item in order.items.all %}
+                    {{ item.product.name }} ({{ item.quantity }})<br>
+                    {% endfor %}
+                </td>
+                <td>{{ order.status }}</td>
+                <td>{{ order.rejection_reason }}</td>
+                <td>
+                    {% if order.status == 'pending' %}
+                    <a href="{% url 'order_action' order.id 'accept' %}">Accept</a>
+                    <a href="{% url 'order_action' order.id 'reject' %}">Reject</a>
+                    {% else %}
+                    -
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </body>
 
 </html>
